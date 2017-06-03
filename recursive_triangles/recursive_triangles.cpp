@@ -19,7 +19,7 @@ int main(int argc, char * argv[])
 	glutInitWindowSize(500, 500);
 
 
-	glutCreateWindow("Bouncing pixel");
+	glutCreateWindow("Recursive Triangles");
 	glutDisplayFunc(display);
 
 	glutMouseFunc(mouseHandler);
