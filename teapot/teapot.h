@@ -6,6 +6,7 @@
 class TEAPOT {
 
 public :
+	TEAPOT();
 	TEAPOT(int argc, char** argv);
 	GLboolean setWindowSize(const GLint& , const GLint& );
 	GLboolean setWindowPosition(const GLint& , const GLint& );
@@ -13,17 +14,14 @@ public :
 	GLboolean show();
 
 
+	static GLint width;
+	static GLint height;
+
 
 private:
 	//void display();
 	//void timer(const GLint);
 	void init();
-
-
-
-	GLint width;
-	GLint height;
-
 	GLint position_x;
 	GLint position_y;
 	GLint time;
