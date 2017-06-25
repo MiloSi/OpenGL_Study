@@ -1,4 +1,5 @@
 #pragma once
+#include <stdlib.h>
 #include <gl/glut.h>
 #include <gl/glu.h>
 #include <gl/gl.h>
@@ -31,6 +32,8 @@ private:
 	GLboolean isSetTimer = false;
 
 };
+enum {WHITE, BLACK, EXIT};
 
+void menu(const GLint);
 void display();
 void timer(const GLint);

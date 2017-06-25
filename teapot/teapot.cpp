@@ -2,37 +2,21 @@
 
 GLint TEAPOT::width = 0;
 GLint TEAPOT::height = 0;
-
+GLboolean isWhite = false;
 
 TEAPOT::TEAPOT() {
-	//glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
-
-
-
-	/*
-	glClear(GL_COLOR_BUFFER_BIT);
-	glMatrixMode(GL_PROJECTION);
-	glOrtho(-1.0, 1.0, -1.0, 1.0, 1.0, -1.0);
-	*/
 }
 
 
 TEAPOT::TEAPOT(int argc, char** argv){
 	glutInit(&argc,argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
-
-
-	/*
-	glClear(GL_COLOR_BUFFER_BIT);
-	glMatrixMode(GL_PROJECTION);
-	glOrtho(-1.0, 1.0, -1.0, 1.0, 1.0, -1.0);
-	*/
 }
 
 GLboolean TEAPOT::setWindowSize(const GLint& width, const GLint& height)
 {
-	//glutInitWindowSize(x, y);
+
 
 	this->width = width;
 	this->height = height;
@@ -43,7 +27,6 @@ GLboolean TEAPOT::setWindowSize(const GLint& width, const GLint& height)
 }
 GLboolean TEAPOT::setWindowPosition(const GLint& x, const GLint& y)
 {
-	//glutInitWindowPosition(x, y);
 
 	this->position_x = x;
 	this->position_y = y;
@@ -87,11 +70,6 @@ void TEAPOT::init() {
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
 	
-	
-
-
-
-
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -99,6 +77,8 @@ void TEAPOT::init() {
 }
 
 GLboolean TEAPOT::show() {
+
+
 
 	if(isSetPosition)
 		glutInitWindowPosition(position_x, position_y);
@@ -113,6 +93,12 @@ GLboolean TEAPOT::show() {
 
 	glutCreateWindow("HELLO WORLD");
 	init();
+
+	glutCreateMenu(menu);
+	glutAddMenuEntry("White", 0);
+	glutAddMenuEntry("Black", 1);
+	glutAddMenuEntry("Exit", 2);
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
 	glutDisplayFunc(display);
 
 	if (isSetTimer) glutTimerFunc(time, timer, 1);
@@ -125,14 +111,20 @@ GLboolean TEAPOT::show() {
 
 void display()
 {
+	if (isWhite)
+		glClearColor(1.0, 1.0, 1.0, 1.0);
+	else
+		glClearColor(0.0, 0.0, 0.0, 1.0);
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	
 	glColor3f(1.0, 0.0, 0.0);
 
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 		
 	glViewport(0, 0, TEAPOT::width / 2, TEAPOT::height /2);
-	glClearColor(1.0, 1.0, 1.0, 1.0);
 	gluLookAt(0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 1.0, 0.0);
 	glutSolidTeapot(0.5);
 
@@ -158,8 +150,6 @@ void display()
 
 	glColor3f(0.0, 0.0, 1.0);
 
-
-
 	glViewport(TEAPOT::width / 2, TEAPOT::height / 2,TEAPOT::width / 2, TEAPOT::height / 2);
 	gluLookAt(0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 1.0, 0.0);
 	glutSolidTeapot(0.5);
@@ -171,5 +161,19 @@ void timer(const GLint time)
 {
 	glutPostRedisplay();
 	glutTimerFunc(time, timer, 1);
+}
+
+void menu(const GLint entryId) {
+
+	if (entryId == WHITE) {
+		isWhite = true;
+	}
+	else if (entryId == BLACK) {
+		isWhite = false;
+	}
+	else if (entryId == EXIT) {
+		exit(1);
+	}
+	glutPostRedisplay();
 }
 
