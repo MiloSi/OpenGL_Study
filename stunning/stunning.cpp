@@ -5,9 +5,8 @@
 
 
 int list;
+int time = 3;
 GLdouble starsVertex[10][2];
-
-
 
 class Rotate {
 public:
@@ -100,16 +99,38 @@ void drawVertex(int d1, int d2, int d3)
 	glEnd();
 }
 
+void mainMenu(int id) {
+	if (id == 0)
+		time = 1;
+	else if (id == 1)
+		time = 3;
+	else if (id == 2)
+		time = 5;
+	else if (id == 3)
+		time = 8;
+	else
+		time = 10;
+}
 
-void drawStar()
+
+
+void star()
 {
 	drawVertex(9, 0, 1);
 	drawVertex(1, 2, 3);
 	drawVertex(3, 4, 5);
 	drawVertex(5, 6, 7);
 	drawVertex(7, 8, 9);
+}
+void drawStars(const GLdouble x, const  GLdouble y, GLdouble z) {
+	glPushMatrix();
+	glTranslated(x, y, z);
+	glScalef(0.1, 0.1, 0.1);
+	star();
+	glPopMatrix();
 
 }
+
 
 
 void displayHandler() {
@@ -127,59 +148,18 @@ void displayHandler() {
 	glPopMatrix();
 	glPopMatrix();
 
-
-
-
 	glPushMatrix();
 	glCallList(list);
 	glPopMatrix();
 
-	glPushMatrix();
-	glTranslated(bigRotate.y, 1, bigRotate.x);
-	glScalef(0.1, 0.1, 0.1);
-	drawStar();
-	glPopMatrix();
-	glPushMatrix();
-	glTranslated(bigRotate.x, 1, bigRotate.y);
-	glScalef(0.1, 0.1, 0.1);
-	drawStar();
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslated(-bigRotate.y, 1, -bigRotate.x);
-	glScalef(0.1, 0.1, 0.1);
-	drawStar();
-	glPopMatrix();
-	glPushMatrix();
-	glTranslated(-bigRotate.x, 1, -bigRotate.y);
-	glScalef(0.1, 0.1, 0.1);
-	drawStar();
-	glPopMatrix();
-
-
-	glPushMatrix();
-	glTranslated(-bigRotate.y, 1, bigRotate.x);
-	glScalef(0.1, 0.1, 0.1);
-	drawStar();
-	glPopMatrix();
-	glPushMatrix();
-	glTranslated(-bigRotate.x, 1, bigRotate.y);
-	glScalef(0.1, 0.1, 0.1);
-	drawStar();
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslated(bigRotate.y, 1, -bigRotate.x);
-	glScalef(0.1, 0.1, 0.1);
-	drawStar();
-	glPopMatrix();
-	glPushMatrix();
-	glTranslated(bigRotate.x, 1, -bigRotate.y);
-	glScalef(0.1, 0.1, 0.1);
-	drawStar();
-	glPopMatrix();
-
-
+	drawStars(bigRotate.y, 1, bigRotate.x);
+	drawStars(bigRotate.y, 1, -bigRotate.x);
+	drawStars(-bigRotate.y, 1, bigRotate.x);
+	drawStars(-bigRotate.y, 1, -bigRotate.x);
+	drawStars(bigRotate.x, 1, bigRotate.y);
+	drawStars(-bigRotate.x, 1, bigRotate.y);
+	drawStars(bigRotate.x, 1, -bigRotate.y);
+	drawStars(-bigRotate.x, 1, -bigRotate.y);
 
 
 	
@@ -212,7 +192,7 @@ void timerHandler(int t) {
 	smallRotate.calculate(4);
 
 	glutPostRedisplay();
-	glutTimerFunc(5, timerHandler, 1);
+	glutTimerFunc(time, timerHandler, 1);
 }
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow) {
@@ -224,8 +204,15 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	init();
 
 	glutDisplayFunc(displayHandler);
-	glutTimerFunc(5, timerHandler, 1);
+	glutTimerFunc(time, timerHandler, 1);
 	listHandler();
+	GLint menuId = glutCreateMenu(mainMenu);
+	glutAddMenuEntry("FASTEST", 0);
+	glutAddMenuEntry("FAST", 1);
+	glutAddMenuEntry("NORMAL", 2);
+	glutAddMenuEntry("SLOW", 3);
+	glutAddMenuEntry("SLOWEST", 4);
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
 
 	glutMainLoop();
 
