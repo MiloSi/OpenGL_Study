@@ -4,7 +4,7 @@
 #include <time.h>
 
 
-const unsigned char PALETTE[16][3] = {
+const unsigned char PALETTE[17][3] = {
 	{ 255, 255, 255 },
 	{ 0, 255, 255 },
 	{ 255, 0, 255 },
@@ -20,7 +20,8 @@ const unsigned char PALETTE[16][3] = {
 	{ 0, 128,  0},
 	{ 255, 0, 0 },
 	{128, 0,  0 },
-	{ 0, 0,  0 }
+	{ 0, 0,  0 },
+	{192, 43, 143}
 };
 
 GLfloat delta = 0.0f;
@@ -32,7 +33,7 @@ GLfloat b = 0.0f;
 
 void myDisplay() {
 
-	// 255¸¦ 1·Î ³ë¸»¸®Á¦ÀÌ¼Ç
+	// 255ë¥¼ 1ë¡œ ë…¸ë§ë¦¬ì œì´ì…˜
 	r = PALETTE[index][0] / 255.0f;
 	g = PALETTE[index][1] / 255.0f;
 	b = PALETTE[index][2] / 255.0f;
@@ -47,24 +48,6 @@ void myDisplay() {
 	glEnd();
 	glutSwapBuffers();
 
-
-
-
-
-
-	/*
-	glClear(GL_COLOR_BUFFER_BIT);
-	glBegin(GL_POLYGON);
-	glColor3f(0.0f, 0.5f, 0.8f);
-	glVertex3f(-1.0f + delta, -0.5f, 0.0f);
-	glVertex3f(0.0f + delta, -0.5f, 0.0f);
-	glVertex3f(0.0f + delta, 0.5f, 0.0f);
-	glVertex3f(-1.0f + delta, 0.5f, 0.0f);
-	glEnd();
-	//ÇÃ·¯½¬ ¸»°í ¹öÆÛ ¸ÞÀÎ¿¡¼­ ´õºíÀ» »ç¿ëÇÏ´Ï±î..
-	glutSwapBuffers();
-
-	*/
 }
 void myTimer(int value) {
 
@@ -73,7 +56,7 @@ void myTimer(int value) {
 	else
 	{
 		delta = 0;
-		if (++index >= 15) {
+		if (++index >= 16) {
 			index = 0;
 			glClear(GL_COLOR_BUFFER_BIT);
 		}
