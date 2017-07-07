@@ -1,3 +1,8 @@
+
+/*
+	Created by Milo Si.
+	To studied OpenGL
+*/
 #include <Windows.h>
 #include "solarsystem.h"
 
