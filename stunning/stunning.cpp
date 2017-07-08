@@ -1,3 +1,7 @@
+/*
+	I do not know why I used class..
+*/
+
 #include <gl/glut.h>
 #include <gl/GLU.h>
 #include <Windows.h>
